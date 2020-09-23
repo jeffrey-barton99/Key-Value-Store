@@ -5,15 +5,15 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Key_Value_Store
 {
-    struct LinkedList
+    struct KeyValue
     {
         public readonly string Key;
-        public readonly object @int;
+        public readonly object Value;
 
-        public LinkedList(string key, object value)
+        public KeyValue(string key, object value)
         {
             Key = key;
-            @int = value;
+            Value = value;
         }   
     }
 
@@ -21,12 +21,12 @@ namespace Key_Value_Store
     {
         int storedValues = 0;
 
-        LinkedList[] kvs = new LinkedList[5];
+        KeyValue[] kvs = new KeyValue[5];
         
        public object this[string key]
         {
             get => GetValueAtKey(key);
-            set => AddOrReplaceKeyValue(new LinkedList(key, value));
+            set => AddOrReplaceKeyValue(new KeyValue(key, value));
         }
         
         public object GetValueAtKey(string key)
@@ -35,14 +35,14 @@ namespace Key_Value_Store
             {
                 if (key == kvs[i].Key)
                 {
-                    return kvs[i].@int;
+                    return kvs[i].Value;
                 }
             }
 
             throw new KeyNotFoundException();
         }
 
-        public void AddOrReplaceKeyValue(LinkedList newKeyValue)
+        public void AddOrReplaceKeyValue(KeyValue newKeyValue)
         {
             bool foundMatchingKey = false;
 
